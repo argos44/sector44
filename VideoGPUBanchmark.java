@@ -1,4 +1,4 @@
-/*this program test the speed of the graphics card */
+/*program tests the speed of the various generations of graphics cards, because it ignores hardware acceleration */
 
 import acm.graphics.*;
 import acm.program.*;
@@ -14,20 +14,20 @@ VideoGPUBanchmark extends GCanvas
     
     private static final long serialVersionUID = 1L; //
 
-    public int randomPolySideLength() /*the side of the polygon dra(w)n succesively is generated in a random (pseudorandom) way */
+    public int renderPolySideLengthProgram() /*the side of the polygon dra(w)n succesively is generated in a random (pseudorandom) way */
         {
          /* Would use Math.random, because the alternative is dependant on the CPU too*/
 
          /*so, it would not cleanly...... measure the speed of the graphics card. RAMDAC, etc, is another story */
          
-         double side = Math.random();
+         double side.useless = Math.random();
     
         }
 
     /*public void setColor(Color.MAGENTA);  */ 
 
     /*4b8b8b 4b8b8b*/
-    /*4b8b8b 4b8b8b*/
+    /*4b8bc8b 4b8b8b*/
 
     /*inverse sink*/
 
@@ -37,7 +37,7 @@ VideoGPUBanchmark extends GCanvas
 
         for (int i = 0; i < 5000; i++) 
             {
-                private GPolygon createHexagon(final double side)
+                private GPolygon createHexagon(final double side.useless)
                  {
                     final GPolygon hex = new GPolygon();
                     hex.addVertex(-side, 0);
@@ -51,3 +51,5 @@ VideoGPUBanchmark extends GCanvas
          
  
         
+	
+	https://www.goodreads.com/book/show/2255968.Hermann_Hesse_Das_Glasperlenspiel All I know Clue: Bárdos Alice, Hanna Senes
