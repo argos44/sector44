@@ -1,36 +1,15 @@
-/*program tests the speed of the various generations of graphics cards, because it ignores hardware acceleration */
+an example of object instantiation in machine code, by Márton Varga:
+procedure NewIRQ; assembler; asm push ds { Azokat a regisztereket, amelyek a meg- } push ax { szakítás végrehajtása közben módosulnak,} push bx { a veremben tároljuk } push cx xor cl,cl { Néhány regiszter kezdeti értéke } mov bh,cl mov ax,seg key { DS a KEY tömb szegmense } mov ds,ax in al,60h { AL-be beolvassuk a billentyű SCAN kódját} cmp al,0e0h { Ha bővített, előtte E0-t olvashatunk be } jnz @1 { Ha nem az, azt tesszük, amit korábban } mov byte [offset key],1 { Jelezzük, hogy a következő bil- }{ lentyű kódjához 128-at kell majd adni } jmp @EnD{ Most nincs több dolgunk }@1: { Ha nem $E0 kódot kaptunk } cmp byte [offset key],1 { Megvizsgáljuk, hogy előzőleg nem } jnz @2 { $E0 kódot kaptunk-e } mov cl,128 { Ha igen, 128-cal növeljük a SCAN-kódot } mov byte [offset key],0 { Nullázzuk a jelző-változót }@2: mov bl,al { BL-be is bevisszük a kódot } and bl,127 { Az alsó 7 bit adja a valódi SCAN-kódot } add bl,cl { Ha bővített a billentyű, BL:= BL+128 } xor cl,cl { CL regiszter nullázása } shl al,1 { C jelzőbit (FLAG) = 7. bit } cmc { Ezt negáljuk, így ha 0, felengedtük az }{ adott billentyűt, ha 1, akkor lenyomtuk } adc cl,00 { CL most 0 vagy 1 lehet (FALSE, TRUE) } mov [offset key+bx],cl { A megszakítást kiváltó billentyű- }{ höz tartozó logikai változó beállítása }@EnD: in al,61H { A megszakítás csatorna visszaállítása } mov ah,al or al,80H out 61H,al { Jelzés a billentyűzetnek } mov al,ah nop { Kevés várakozás } nop { (a soros adatkiküldés sebessége miatt) } nop out 61H,al cli mov al,20H { "Megszakítás vége" jelzés } out 20H,al sti pop cx { Regiszterek visszaolvasása a veremből } pop bx pop ax pop ds iret { Vége a megszakításnak }end;begin getintvec( $09, @old); { A régi megszakításvektort tároljuk } setintvec( $09, @NewIRQ); { A $09 megszakítás ezentúl a NEWIRQ }{ eljárást hívja meg } fillchar(key,sizeof(key),0); { KEY tömb nullázása (FALSE) }repeatfor i:= 1 to 127 doif key[i] then writeln(i:3);{ A lenyomott billentyű kódja a képernyőre}for i:= 128 to 255 doif key[i] then{ Ha a bővített a billen- } writeln(i-128:3,'+');{ tyű, egy pluszjelet is kiírunk utána }until key[1]; { ESC megnyomásáig } setintvec( $09, @old);end.
 
-/*
- * File: gfxtest.java
- * --------------------
+objects are rectangles on a feltboard, like a GCanvas... JFrame was xerox -- https://www.xerox.com/
 
+or data entities are also objects, but they are abstract, though a rectangle on screen is also virtual
 
- */
+you understand it....
 
-import acm.graphics.*;
-import acm.program.*;
-import java.awt.*;
+the getgetRandomGravityEffect method is useful, because it protects the field object /gravity field/
+with the private variable, that is only accessible inside the method, or through the return value of that method... the place of the variable is within the method /this method, the encapsulating method, thegetRandomGravityEffect method /
 
-public class gfxtest extends GraphicsProgram {
+GObject is not realized, or instantiated, only G3DRect object is instantiated as a real object on a virtual screen /it is real for the PC/
 
-	public static final double PHI = 1.666013;
-	
-	public void run() {
-	   for (i = 1 : i=i+1 : i<360 ) {
-		
-		GCanvas FeltBored = new GCanvas(); 
-	 GOval oval = new GOval(150, 50 + 50 / PHI, 100, 100 / PHI);
-	  oval.setFilled(true);
-	  
-	  FeltBored.add(oval);
-	  
-	   Iterator iterationTerra = FeltBored.iterator();
-	   }
-	}
-
-/* Standard Java entry point */
-/* This method can be eliminated in most Java environments */
-	public static void main(String[] args) {
-		new gfxtest().start(args);
-	}
-}
+G3DRect only inherits those parameters or variables of the GObject, that are used in G3DRect - the rectangle object - because of memory spar
